@@ -5,14 +5,14 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import difflib
 
-# Load movies.pkl (full dataset)
+# Load movies.pkl
 movies = pickle.load(open('movies.pkl', 'rb'))
 
-# Limit to Top 1000 Movies to avoid memory issues
+# Limit to Top 1000 Movies FIRST
 movies = movies.head(1000)
 
-# Combine features into single text
-combined_text = movies['genres'] + ' ' + movies['keywords'] + ' ' + movies['tagline'] + ' ' + movies['title'] + ' ' + movies['cast'] + ' ' + movies['director']
+# Now use pre-computed combined_features column
+combined_text = movies['combined_features']
 
 # Vectorization
 vectorizer = TfidfVectorizer()
@@ -65,4 +65,4 @@ if st.button('Recommend'):
                 if homepage != 'Homepage not available':
                     st.markdown(f"[Visit Homepage]({homepage})")
                 else:
-                    st.caption('Homepage not available ❌')
+                    st.caption('Homepage not available ')
